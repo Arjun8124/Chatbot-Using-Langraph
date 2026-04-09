@@ -14,3 +14,7 @@ app.add_middleware(
 
 app.include_router(api.router)
 app.include_router(users.router)
+
+@app.get("/")
+async def welcome():
+    return {"message" : "backend is running"}
