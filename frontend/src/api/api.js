@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-	baseURL: "chatbot-backend-fastapi-production.up.railway.app",
+	baseURL: "https://chatbot-backend-fastapi-production.up.railway.app",
 });
 
 api.interceptors.request.use((config) => {
