@@ -23,6 +23,10 @@ export default function App() {
 	function handleLogout() {
 		localStorage.removeItem("token");
 		setToken(null);
+		setThreadList([]);
+		setMessages([]);
+		setMessage("");
+		setThreadId("");
 	}
 
 	const toggleSidebar = useCallback(() => setSidebarOpen((prev) => !prev), []);
