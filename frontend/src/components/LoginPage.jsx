@@ -4,7 +4,7 @@ import { loginUser, registerUser } from "../api/api";
 export default function LoginPage({ onLogin }) {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [registered, setRegistered] = useState(false);
+	const [registered, setRegistered] = useState(true);
 	const [error, setError] = useState("");
 
 	async function handleClick() {
