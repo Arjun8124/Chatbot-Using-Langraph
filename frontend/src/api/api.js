@@ -12,6 +12,17 @@ api.interceptors.request.use((config) => {
 	return config;
 });
 
+api.interceptors.response.use(
+	(response) => response,
+	(error) => {
+		if (error.response?.status === 401) {
+			localStorage.removeItem("token");
+			window.location.reload();
+		}
+		return Promise.reject(error);
+	},
+);
+
 export async function sendMessage(message, thread_id) {
 	const res = await api.post("/api/chat", {
 		message: message,
