@@ -10,7 +10,7 @@ from langgraph.checkpoint.sqlite import SqliteSaver
 from pdf_ingestion import _THREAD_METADATA, _THREAD_RETRIEVERS
 
 # -------------------
-# Checkpointer
+# checkpointer
 # -------------------
 conn = sqlite3.connect(database="chatbot.db", check_same_thread=False)
 checkpointer = SqliteSaver(conn=conn)

@@ -11,8 +11,8 @@ from langgraph.graph import StateGraph
 from langgraph.graph.message import add_messages
 from langgraph.prebuilt import ToolNode, tools_condition
 
-from tools import llm_with_tools, tools
 from database import checkpointer
+from tools import llm_with_tools, tools
 
 
 # -------------------
@@ -33,7 +33,6 @@ def chat_node(state: ChatState):
 
 
 tool_node = ToolNode(tools)
-
 
 # -------------------
 # Graph
