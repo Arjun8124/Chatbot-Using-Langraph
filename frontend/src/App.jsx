@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import MainChat from "./components/MainChat";
 import InputBox from "./components/InputBox";
+import LoginPage from "./components/LoginPage";
 import { useEffect, useState, useCallback } from "react";
 import { getThreads, getThreadMessages } from "./api/api";
 
@@ -11,15 +12,34 @@ export default function App() {
 	const [message, setMessage] = useState("");
 	const [threadList, setThreadList] = useState([]);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const [isLoading, setIsLoading] = useState(false);
+	const [token, setToken] = useState(localStorage.getItem("token"));
+
+	function handleLogin(newToken) {
+		localStorage.setItem("token", newToken);
+		setToken(newToken);
+	}
+
+	function handleLogout() {
+		localStorage.removeItem("token");
+		setToken(null);
+		setThreadList([]);
+		setMessages([]);
+		setMessage("");
+		setThreadId("");
+	}
 
 	const toggleSidebar = useCallback(() => setSidebarOpen((prev) => !prev), []);
 	const closeSidebar = useCallback(() => setSidebarOpen(false), []);
 
 	useEffect(() => {
+		if (!token) return;
+
 		async function getAllThreads() {
 			const res = await getThreads();
 
 			//list of threads
+			//testing
 			const threads = res.threads;
 
 			const threadData = await Promise.all(
@@ -41,7 +61,11 @@ export default function App() {
 		}
 
 		getAllThreads();
-	}, []);
+	}, [token]);
+
+	if (!token) {
+		return <LoginPage onLogin={handleLogin} />;
+	}
 
 	return (
 		<div className="app-layout">
@@ -58,11 +82,12 @@ export default function App() {
 				onClose={closeSidebar}
 			/>
 			<div className="app-main">
-				<Navbar onToggleSidebar={toggleSidebar} />
+				<Navbar onToggleSidebar={toggleSidebar} handleLogout={handleLogout} />
 				<MainChat
 					activeId={threadId}
 					messages={messages}
 					setMessages={setMessages}
+					isLoading={isLoading}
 				/>
 				<InputBox
 					message={message}
@@ -72,6 +97,8 @@ export default function App() {
 					messages={messages}
 					setMessages={setMessages}
 					setThreadList={setThreadList}
+					isLoading={isLoading}
+					setIsLoading={setIsLoading}
 				/>
 			</div>
 		</div>
