@@ -26,38 +26,32 @@ checkpointer = PostgresSaver(pool)
 checkpointer.setup()
 
 with pool.connection() as conn:
-    conn.execute(
-        """
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS message_timestamps (
             id SERIAL PRIMARY KEY,
             thread_id TEXT NOT NULL,
             role TEXT NOT NULL,
             timestamp TEXT NOT NULL
         )
-    """
-    )
+    """)
 
-    conn.execute(
-        """
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS users(
             id SERIAL PRIMARY KEY,
             email TEXT UNIQUE NOT NULL,
             password_hash TEXT NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-    """
-    )
+    """)
 
-    conn.execute(
-        """
+    conn.execute("""
         CREATE TABLE IF NOT EXISTS chat_threads(
             thread_id TEXT PRIMARY KEY,
             user_id INTEGER NOT NULL,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(user_id) references users(id) ON DELETE CASCADE
+            FOREIGN KEY(user_id) references users(id)
         )
-    """
-    )
+    """)
 
 
 def save_timestamp(thread_id: str, role: str, timestamp: str):

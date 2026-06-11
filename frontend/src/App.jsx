@@ -39,6 +39,7 @@ export default function App() {
 			const res = await getThreads();
 
 			//list of threads
+			//testing
 			const threads = res.threads;
 
 			const threadData = await Promise.all(

@@ -22,32 +22,35 @@
 
 This project is a full-stack conversational AI application powered by **LangGraph** agents and open-source **HuggingFace** models. It supports multi-user authentication, persistent conversation threads, autonomous tool invocation (web search, calculator, stock quotes), and document Q&A via PDF-based Retrieval-Augmented Generation — all backed by **Supabase PostgreSQL**.
 
-> 🚀 **Live API:** [`https://chatbot-backend-fastapi-production.up.railway.app`](https://chatbot-backend-fastapi-production.up.railway.app)
+> 🚀 **Live API:** [`https://chatbot-backend-fastapi-updated.railway.internal`](https://chatbot-backend-fastapi-updated.railway.internal)
 
 ---
 
 ## ✨ Features
 
 ### 🔐 Authentication & Multi-User
+
 - **Secure registration & login** — Email/password auth with Argon2 password hashing via `pwdlib`.
 - **Stateless JWT sessions** — Configurable token expiry; tokens are validated on every protected request.
 - **Per-user thread isolation** — Users can only read and write their own conversations.
 - **Automatic logout** — Axios interceptors detect 401 responses and redirect to login seamlessly.
 
 ### 🤖 AI Agent & Tool Calling
+
 The LangGraph agent autonomously decides when and which tools to invoke:
 
-| Tool | Description |
-|------|-------------|
-| 🔍 **Web Search** | Real-time results via DuckDuckGo |
-| 🧮 **Calculator** | Basic arithmetic (add, subtract, multiply, divide) |
-| 📈 **Stock Prices** | Live quotes from the Alpha Vantage API |
-| 📄 **RAG (PDF Q&A)** | Answers grounded in uploaded PDF documents |
+| Tool                 | Description                                        |
+| -------------------- | -------------------------------------------------- |
+| 🔍 **Web Search**    | Real-time results via DuckDuckGo                   |
+| 🧮 **Calculator**    | Basic arithmetic (add, subtract, multiply, divide) |
+| 📈 **Stock Prices**  | Live quotes from the Alpha Vantage API             |
+| 📄 **RAG (PDF Q&A)** | Answers grounded in uploaded PDF documents         |
 
 - **Multi-turn memory** — Conversation history is persisted via LangGraph's PostgreSQL checkpointer, so the agent remembers context across messages.
 - **PDF ingestion** — Upload a PDF through the UI; it's automatically chunked, embedded with `all-MiniLM-L6-v2`, and indexed in FAISS for per-thread retrieval.
 
 ### 💬 Chat Experience
+
 - **Thread management** — Create, switch between, and delete conversation threads from the sidebar.
 - **Typing indicator** — Live visual feedback while the AI generates a response.
 - **Markdown rendering** — Responses render with full Markdown and GitHub-Flavored Markdown (GFM) table support.
@@ -159,20 +162,20 @@ Chatbot-Using-Langraph/
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology | Purpose |
-|-------|-----------|---------|
-| **LLM** | [Qwen 2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) via HuggingFace Inference API | Chat & tool-call reasoning |
-| **Embeddings** | [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2) | PDF chunk vectorization for RAG |
-| **Agent Framework** | [LangGraph](https://github.com/langchain-ai/langgraph) | Stateful graph with conditional tool-call edges |
-| **Backend** | [FastAPI](https://fastapi.tiangolo.com/) + [Uvicorn](https://www.uvicorn.org/) | REST API server |
-| **Auth** | [PyJWT](https://pyjwt.readthedocs.io/) + [pwdlib](https://github.com/frankie567/pwdlib) (Argon2) | Token issuance & password hashing |
-| **Database** | [Supabase PostgreSQL](https://supabase.com/) via [psycopg 3](https://www.psycopg.org/psycopg3/) | Persistent storage & LangGraph checkpointing |
-| **Vector DB** | [FAISS](https://github.com/facebookresearch/faiss) | In-memory, per-thread similarity search for RAG |
-| **Frontend** | [React 19](https://react.dev/) + [Vite](https://vite.dev/) | SPA with fast HMR development |
-| **HTTP Client** | [Axios](https://axios-http.com/) | API requests with JWT interceptors |
-| **Markdown** | [react-markdown](https://github.com/remarkjs/react-markdown) + remark-gfm | Rich AI response rendering |
-| **Containerization** | [Docker](https://www.docker.com/) | Reproducible, portable backend deploys |
-| **Hosting** | [Railway](https://railway.app/) | CI/CD from Dockerfile on push |
+| Layer                | Technology                                                                                            | Purpose                                         |
+| -------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
+| **LLM**              | [Qwen 2.5-7B-Instruct](https://huggingface.co/Qwen/Qwen2.5-7B-Instruct) via HuggingFace Inference API | Chat & tool-call reasoning                      |
+| **Embeddings**       | [all-MiniLM-L6-v2](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2)                     | PDF chunk vectorization for RAG                 |
+| **Agent Framework**  | [LangGraph](https://github.com/langchain-ai/langgraph)                                                | Stateful graph with conditional tool-call edges |
+| **Backend**          | [FastAPI](https://fastapi.tiangolo.com/) + [Uvicorn](https://www.uvicorn.org/)                        | REST API server                                 |
+| **Auth**             | [PyJWT](https://pyjwt.readthedocs.io/) + [pwdlib](https://github.com/frankie567/pwdlib) (Argon2)      | Token issuance & password hashing               |
+| **Database**         | [Supabase PostgreSQL](https://supabase.com/) via [psycopg 3](https://www.psycopg.org/psycopg3/)       | Persistent storage & LangGraph checkpointing    |
+| **Vector DB**        | [FAISS](https://github.com/facebookresearch/faiss)                                                    | In-memory, per-thread similarity search for RAG |
+| **Frontend**         | [React 19](https://react.dev/) + [Vite](https://vite.dev/)                                            | SPA with fast HMR development                   |
+| **HTTP Client**      | [Axios](https://axios-http.com/)                                                                      | API requests with JWT interceptors              |
+| **Markdown**         | [react-markdown](https://github.com/remarkjs/react-markdown) + remark-gfm                             | Rich AI response rendering                      |
+| **Containerization** | [Docker](https://www.docker.com/)                                                                     | Reproducible, portable backend deploys          |
+| **Hosting**          | [Railway](https://railway.app/)                                                                       | CI/CD from Dockerfile on push                   |
 
 ---
 
@@ -180,16 +183,17 @@ Chatbot-Using-Langraph/
 
 ### Prerequisites
 
-| Requirement | Minimum Version |
-|-------------|----------------|
-| Python | 3.11+ |
-| Node.js | 18+ |
-| PostgreSQL | Any (or a free [Supabase](https://supabase.com/) project) |
+| Requirement | Minimum Version                                           |
+| ----------- | --------------------------------------------------------- |
+| Python      | 3.11+                                                     |
+| Node.js     | 18+                                                       |
+| PostgreSQL  | Any (or a free [Supabase](https://supabase.com/) project) |
 
 You will also need:
+
 - A [HuggingFace API token](https://huggingface.co/settings/tokens) (free tier works)
-- *(Optional)* An [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key) for live stock quotes
-- *(Optional)* A [LangSmith API key](https://smith.langchain.com/) for agent tracing
+- _(Optional)_ An [Alpha Vantage API key](https://www.alphavantage.co/support/#api-key) for live stock quotes
+- _(Optional)_ A [LangSmith API key](https://smith.langchain.com/) for agent tracing
 
 ---
 
@@ -240,6 +244,7 @@ LANGCHAIN_PROJECT="Chatbot Project"
 ```
 
 > 💡 **Tip:** Generate a cryptographically secure JWT secret with:
+>
 > ```bash
 > python -c "import secrets; print(secrets.token_hex(32))"
 > ```
@@ -269,6 +274,7 @@ npm run dev
 The UI will be available at **`http://localhost:5173`**.
 
 > ⚠️ **Local development note:** The frontend defaults to the production API URL. To use your local backend, update `baseURL` in `frontend/src/api/api.js`:
+>
 > ```js
 > const baseURL = "http://localhost:8000"; // change from production URL
 > ```
@@ -309,24 +315,24 @@ All protected routes require the header: `Authorization: Bearer <token>`
 
 ### Authentication
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/users/register` | ❌ | Create a new account |
-| `POST` | `/users/login` | ❌ | Login and receive a JWT |
-| `GET` | `/users/me` | 🔒 | Get the current user's profile |
-| `DELETE` | `/users/{id}` | 🔒 | Delete own account |
+| Method   | Endpoint          | Auth | Description                    |
+| -------- | ----------------- | ---- | ------------------------------ |
+| `POST`   | `/users/register` | ❌   | Create a new account           |
+| `POST`   | `/users/login`    | ❌   | Login and receive a JWT        |
+| `GET`    | `/users/me`       | 🔒   | Get the current user's profile |
+| `DELETE` | `/users/{id}`     | 🔒   | Delete own account             |
 
 ### Chat & Threads
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| `POST` | `/api/chat` | 🔒 | Send a message and receive an AI response |
-| `POST` | `/api/threads` | 🔒 | Create a new conversation thread |
-| `GET` | `/api/threads` | 🔒 | List all threads for the current user |
-| `GET` | `/api/threads/{thread_id}/messages` | 🔒 | Retrieve message history for a thread |
-| `GET` | `/api/threads/{thread_id}/documents` | 🔒 | Get PDF metadata for a thread |
-| `DELETE` | `/api/threads/{thread_id}` | 🔒 | Delete a thread and its messages |
-| `POST` | `/api/upload_pdf` | 🔒 | Upload and ingest a PDF for RAG |
+| Method   | Endpoint                             | Auth | Description                               |
+| -------- | ------------------------------------ | ---- | ----------------------------------------- |
+| `POST`   | `/api/chat`                          | 🔒   | Send a message and receive an AI response |
+| `POST`   | `/api/threads`                       | 🔒   | Create a new conversation thread          |
+| `GET`    | `/api/threads`                       | 🔒   | List all threads for the current user     |
+| `GET`    | `/api/threads/{thread_id}/messages`  | 🔒   | Retrieve message history for a thread     |
+| `GET`    | `/api/threads/{thread_id}/documents` | 🔒   | Get PDF metadata for a thread             |
+| `DELETE` | `/api/threads/{thread_id}`           | 🔒   | Delete a thread and its messages          |
+| `POST`   | `/api/upload_pdf`                    | 🔒   | Upload and ingest a PDF for RAG           |
 
 ### Example: Send a Chat Message
 
@@ -341,16 +347,16 @@ curl -X POST https://chatbot-backend-fastapi-production.up.railway.app/api/chat 
 
 ## 📋 Environment Variables Reference
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `HUGGINGFACEHUB_API_TOKEN` | ✅ | HuggingFace Inference API token |
-| `DATABASE_URL` | ✅ | PostgreSQL connection string |
-| `JWT_SECRET_KEY` | ✅ | Secret for signing JWT tokens (min. 32 bytes recommended) |
-| `JWT_ALGORITHM` | ✅ | JWT signing algorithm — default: `HS256` |
-| `ALPHA_VANTAGE_API_KEY` | ❌ | Required for the stock price tool |
-| `LANGCHAIN_TRACING_V2` | ❌ | Set `true` to enable LangSmith tracing |
-| `LANGCHAIN_API_KEY` | ❌ | LangSmith API key |
-| `LANGCHAIN_PROJECT` | ❌ | LangSmith project name |
+| Variable                   | Required | Description                                               |
+| -------------------------- | -------- | --------------------------------------------------------- |
+| `HUGGINGFACEHUB_API_TOKEN` | ✅       | HuggingFace Inference API token                           |
+| `DATABASE_URL`             | ✅       | PostgreSQL connection string                              |
+| `JWT_SECRET_KEY`           | ✅       | Secret for signing JWT tokens (min. 32 bytes recommended) |
+| `JWT_ALGORITHM`            | ✅       | JWT signing algorithm — default: `HS256`                  |
+| `ALPHA_VANTAGE_API_KEY`    | ❌       | Required for the stock price tool                         |
+| `LANGCHAIN_TRACING_V2`     | ❌       | Set `true` to enable LangSmith tracing                    |
+| `LANGCHAIN_API_KEY`        | ❌       | LangSmith API key                                         |
+| `LANGCHAIN_PROJECT`        | ❌       | LangSmith project name                                    |
 
 ---
 
