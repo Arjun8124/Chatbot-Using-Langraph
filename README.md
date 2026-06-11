@@ -22,7 +22,7 @@
 
 This project is a full-stack conversational AI application powered by **LangGraph** agents and open-source **HuggingFace** models. It supports multi-user authentication, persistent conversation threads, autonomous tool invocation (web search, calculator, stock quotes), and document Q&A via PDF-based Retrieval-Augmented Generation — all backed by **Supabase PostgreSQL**.
 
-> 🚀 **Live API:** [`https://chatbot-backend-fastapi-updated.railway.internal`](https://chatbot-backend-fastapi-updated.railway.internal)
+> 🚀 **Live API:** [`https://chatbot-backend-fastapi-updated-production.up.railway.app`](https://chatbot-backend-fastapi-updated-production.up.railway.app)
 
 ---
 
